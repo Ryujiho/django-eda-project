@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-h@cjr$4xko&v^^t^sr56pf*@)!l4m)55)qd+xehx_n%vuo091+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['edahome.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -56,7 +56,9 @@ ROOT_URLCONF = 'edaproj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, "homepage", "template")
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
