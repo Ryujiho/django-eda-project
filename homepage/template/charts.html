@@ -8,19 +8,18 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>World Alcohol Report</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="https://git.heroku.com/edahome.git"><i class="fas fa-bars"></i></button>
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">EDA Project</a>
             <!-- Side Button-->
-            <!--a class="navbar-brand ps-3" href="https://git.heroku.com/edahome.git"><i class="fab fa-github"></i></button>
-            <a class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption"><i class="fas fa-database"></i></button-->
+            <a class="navbar-brand ps-3" href="https://git.heroku.com/edahome.git" role="button"><i class="fab fa-github"></i></a>
+            <a class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption" role="button"><i class="fas fa-database"></i></a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -70,33 +69,29 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Alcohol Consumption</h1>
+                        <h1 class="mt-4">Charts</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Suicide Rate, Income, Employment & Urban Rate</li>
+                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Charts</li>
                         </ol>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <a class="db_btn" href="/step1">
-                                        <div class="card-body">1. Data Set 살펴보기</div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <a class="db_btn" href="/step2">
-                                        <div class="card-body">2. 가설 수립하기 </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <a class="db_btn" href="/step3">
-                                      <div class="card-body">3. 가설 검증하기</div>
-                                    </a>
-                                </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                Chart.js is a third party plugin that is used to generate the charts in this template. The charts below have been customized - for further customization options, please visit the official
+                                <a target="_blank" href="https://www.chartjs.org/docs/latest/">Chart.js documentation</a>
+                                .
                             </div>
                         </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Area Chart Example
+                            </div>
+                            <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                        </div>
+
+
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">
@@ -125,52 +120,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                           {% for col in csv_df.columns %}
-                                               <th>
-                                               {{col}}
-                                               </th>
-                                           {% endfor %}
-                                       </tr>
-                                   </thead>
-                                   <tfoot>
-                                        <tr>
-                                            {% for col in csv_df.columns %}
-                                                <th>
-                                                {{col}}
-                                                </th>
-                                            {% endfor %}
-                                        </tr>
-                                    </tfoot>
-                                   <tbody>
-                                       {% for index, row in csv_df.iterrows %}
-                                           <tr>
-                                           {% for cell in row %}
-                                               <td>
-                                               {{cell}}
-                                               </td>
-                                           {% endfor %}
-                                           </tr>
-                                       {% endfor %}
-                                   </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Jiho, yoo 2022</div>
-                            <div class="text-muted">Designed by <a href="https://startbootstrap.com/previews/sb-admin">bootstrap</a></div>
+                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
                         </div>
                     </div>
                 </footer>

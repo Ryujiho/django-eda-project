@@ -11433,6 +11433,17 @@ body {
 .sb-topnav.navbar-light #sidebarToggle {
   color: #212529;
 }
+#sidebarLeftButton {
+  color: white;
+  float:right;
+  margin-left: auto;
+}
+#sidebarRightButton {
+  color: white;
+  float:right;
+  margin-left: 0;
+  padding: 1em;
+}
 .sb-sidenav {
   display: flex;
   flex-direction: column;

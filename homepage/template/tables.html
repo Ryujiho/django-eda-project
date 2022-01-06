@@ -15,12 +15,12 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="https://git.heroku.com/edahome.git"><i class="fas fa-bars"></i></button>
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">EDA Project</a>
             <!-- Side Button-->
-            <!--a class="navbar-brand ps-3" href="https://git.heroku.com/edahome.git"><i class="fab fa-github"></i></button>
-            <a class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption"><i class="fas fa-database"></i></button-->
+            <a class="navbar-brand ps-3" href="https://git.heroku.com/edahome.git" role="button"><i class="fab fa-github"></i></a>
+            <a class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption" role="button"><i class="fas fa-database"></i></a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -70,61 +70,19 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Alcohol Consumption</h1>
+                        <h1 class="mt-4">Tables</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Suicide Rate, Income, Employment & Urban Rate</li>
+                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Tables</li>
                         </ol>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <a class="db_btn" href="/step1">
-                                        <div class="card-body">1. Data Set 살펴보기</div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <a class="db_btn" href="/step2">
-                                        <div class="card-body">2. 가설 수립하기 </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <a class="db_btn" href="/step3">
-                                      <div class="card-body">3. 가설 검증하기</div>
-                                    </a>
-                                </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
+                                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                                .
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Correlation Heatmap
-                                    </div>
-                                    <div>
-                                        {% autoescape off %}
-                                        {{ plot_corr }}
-                                        {% endautoescape %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart
-                                    </div>
-                                    <div>
-                                        {% autoescape off %}
-                                        {{ plot_bar }}
-                                        {% endautoescape %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -134,14 +92,14 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                           {% for col in csv_df.columns %}
-                                               <th>
-                                               {{col}}
-                                               </th>
-                                           {% endfor %}
-                                       </tr>
-                                   </thead>
-                                   <tfoot>
+                                            {% for col in csv_df.columns %}
+                                                <th>
+                                                {{col}}
+                                                </th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
                                         <tr>
                                             {% for col in csv_df.columns %}
                                                 <th>
@@ -150,27 +108,31 @@
                                             {% endfor %}
                                         </tr>
                                     </tfoot>
-                                   <tbody>
-                                       {% for index, row in csv_df.iterrows %}
-                                           <tr>
-                                           {% for cell in row %}
-                                               <td>
-                                               {{cell}}
-                                               </td>
-                                           {% endfor %}
-                                           </tr>
-                                       {% endfor %}
-                                   </tbody>
+                                    <tbody>
+                                        {% for index, row in csv_df.iterrows %}
+                                            <tr>
+                                            {% for cell in row %}
+                                                <td>
+                                                {{cell}}
+                                                </td>
+                                            {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
                                 </table>
-                            </div>
+                                </div>
                         </div>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Jiho, yoo 2022</div>
-                            <div class="text-muted">Designed by <a href="https://startbootstrap.com/previews/sb-admin">bootstrap</a></div>
+                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
                         </div>
                     </div>
                 </footer>
@@ -181,5 +143,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
-    </body>
+   </body>
 </html>

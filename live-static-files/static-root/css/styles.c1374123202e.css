@@ -7843,7 +7843,7 @@ textarea.form-control-lg {
 
 .bg-warning {
   --bs-bg-opacity: 1;
-  background-color: #DFD3C3 !important;
+  background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-danger {
@@ -11433,6 +11433,7 @@ body {
 .sb-topnav.navbar-light #sidebarToggle {
   color: #212529;
 }
+
 .sb-sidenav {
   display: flex;
   flex-direction: column;

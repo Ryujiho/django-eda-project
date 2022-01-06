@@ -19,5 +19,10 @@ from homepage import views
 
 urlpatterns = [
     path('', views.index),
+    path('step1/', views.step1),
+    path('step2/', views.step2),
+    path('step3/', views.step3),
+    path('tables/', views.tables),
+    path('charts/', views.charts),
     path('admin/', admin.site.urls),
 ]
