@@ -129,7 +129,7 @@ def make_graph_bar(alcohol_mean, width):
     plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
     return plot_div
 
-def make_graph_scatter(alcohol_df):
+def make_graph_scatter(alcohol_df, width):
     graphs = []
     graphs.append(
         go.Scatter(x=alcohol_df.incomeperperson.tolist(), y=alcohol_df.urbanrate.tolist(),
@@ -145,7 +145,7 @@ def make_graph_scatter(alcohol_df):
     )
     layout = {
         'height': 420,
-        'width': 550,
+        'width': width,
         'title': '<b>GDP가 높은 나라일수록 도시 인구 비율이 높다.</b>',
         'xaxis_title': "Income per person",
         'yaxis_title': "Urban Rate"
@@ -222,8 +222,9 @@ def index(request):
     # Send to HTML Template
     contents={}
     contents['csv_df'] = df_alcohol
-    contents['plot_corr'] = make_graph_corr(df_alcohol)
-    contents['plot_bar'] = make_graph_bar(df_mean_continent, 560)
+    contents['plot_bar'] = make_graph_bar(df_mean_continent, 1000)
+    contents['plot_pie'] = make_graph_pie(new_df)
+    contents['plot_bar_top'] = make_graph_top5(df_alcohol)
 
     return render(request, 'index.html', contents)
 
@@ -251,9 +252,19 @@ def step2(request):
 
 
 def step3(request):
-    contents={}
-    return render(request, 'step3.html', contents)
+    df_alcohol = pd.read_csv(path_alcohol)
+    df_continents = pd.read_csv(path_continents)
 
+    new_df = getNewDF(df_alcohol, df_continents)
+
+    # Group by Continent
+    df_mean_continent = new_df.groupby(by='continent').mean()
+
+    # Send to HTML Template
+    contents={}
+    contents['plot_bar'] = make_graph_bar(df_mean_continent, 1000)
+    contents['plot_scatter'] = make_graph_scatter(df_alcohol, 1000)
+    return render(request, 'step3.html', contents)
 
 def tables(request):
     df_alcohol = pd.read_csv(path_alcohol)
@@ -278,7 +289,7 @@ def charts(request):
     contents={}
     contents['plot_corr'] = make_graph_corr(df_alcohol)
     contents['plot_bar'] = make_graph_bar(df_mean_continent, 1200)
-    contents['plot_scatter'] = make_graph_scatter(df_alcohol)
+    contents['plot_scatter'] = make_graph_scatter(df_alcohol, 550)
     contents['plot_pie'] = make_graph_pie(new_df)
     contents['plot_bar_top'] = make_graph_top5(df_alcohol)
     

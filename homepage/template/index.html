@@ -8,6 +8,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>World Alcohol Report</title>
+
+        <link rel="icon"href="{% static 'assets/img/favicon.ico' %}">
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -41,15 +43,15 @@
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                     <a href="/step1" class="nav-link collapsed" >
-                                        Step 1.
+                                        Step 1. Data
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </a>
                                     <a href="/step2" class="nav-link collapsed">
-                                        Step 2.
+                                        Step 2. Analysis
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </a>
                                     <a href="/step3" class="nav-link collapsed">
-                                        Step 3.
+                                        Step 3. Evaluation
                                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                     </a>
                                 </nav>
@@ -97,7 +99,32 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Bar Chart
+                            </div>
+                            <div>
+                                {% autoescape off %}
+                                {{ plot_bar }}
+                                {% endautoescape %}
+                            </div>
+                        </div>
+
                         <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Pie Chart
+                                    </div>
+                                    <div>
+                                        {% autoescape off %}
+                                        {{ plot_pie }}
+                                        {% endautoescape %}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
@@ -106,20 +133,7 @@
                                     </div>
                                     <div>
                                         {% autoescape off %}
-                                        {{ plot_bar }}
-                                        {% endautoescape %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Heatmap
-                                    </div>
-                                    <div>
-                                        {% autoescape off %}
-                                        {{ plot_corr }}
+                                        {{ plot_bar_top }}
                                         {% endautoescape %}
                                     </div>
                                 </div>
