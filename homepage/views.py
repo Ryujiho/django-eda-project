@@ -9,20 +9,20 @@ from plotly.offline import plot
 import plotly.graph_objects as go
 
 
-    
+# global variables (csv)
 BASE_DIR = Path(__file__).resolve().parent.parent
 path_alcohol = os.path.join(BASE_DIR, 'homepage', 'static', 'alcohol.csv')
 path_continents = os.path.join(BASE_DIR, 'homepage', 'static', 'continents.csv')
+df_alcohol = pd.read_csv(path_alcohol)
+df_continents = pd.read_csv(path_continents)
+
 
 # Create Plots ---------------------------------------------------------
-def make_graph_corr(alcohol_df):
-    # List of graph objects for figure.
-    # Each object will contain on series of data.
-    graphs = []
-
-    corr_df = alcohol_df.corr().apply(lambda x: round(x,2))
+def make_graph_corr(df):
+    corr_df = df.corr().apply(lambda x: round(x,2))
     columns_name = ['Alcohol Consumption','Income per person','Suicide Per 100th','Employ Rate','Urban Rate']
-    # Adding bar plot of y3 vs x.
+
+    graphs = []
     graphs.append(
         go.Heatmap(
                     {'z': corr_df.values.tolist(),
@@ -35,21 +35,18 @@ def make_graph_corr(alcohol_df):
                          [1.0, '#1A374D']],
                     texttemplate="%{z}")
     )
-
-    # Setting layout of the figure.
     layout = {
         'title': '<b>컬럼별 상관계수 비교</b> <br><sup>색이 진할수록 높은 상관계수를 가진다.</sup>',
         'height': 400,
         'width': 450,
     }
 
-    # Getting HTML needed to render the plot.
     plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
     return plot_div
 
-def getNewDF(df_alcohol, df_continents):
+def getNewDF(df, df_continents):
     list = []
-    for idx, country in enumerate(df_alcohol.country.unique()):
+    for idx, country in enumerate(df.country.unique()):
         region = (df_continents[df_continents['name'] == country].region)
         if region.empty:
             list.append('NaN')
@@ -57,39 +54,39 @@ def getNewDF(df_alcohol, df_continents):
             list.append(str(region.item()))
 
     # Create continent column & Add new data to NaN fields.
-    df_alcohol['continent'] = list
-    df_alcohol.loc[df_alcohol.country == 'Korea, Rep.','continent']='Asia'
-    df_alcohol.loc[df_alcohol.country == 'Swaziland','continent']='Africa'
-    df_alcohol.loc[df_alcohol.country == 'Slovak Republic','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Yemen, Rep.','continent']='Asia'
-    df_alcohol.loc[df_alcohol.country == 'Bosnia and Herzegovina','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Brunei','continent']='Asia'
-    df_alcohol.loc[df_alcohol.country == 'Cape Verde','continent']='Africa'
-    df_alcohol.loc[df_alcohol.country == 'Central African Rep.','continent']='Africa'
-    df_alcohol.loc[df_alcohol.country == 'Congo, Dem. Rep.','continent']='Africa'
-    df_alcohol.loc[df_alcohol.country == 'Congo, Rep.','continent']='Africa'
-    df_alcohol.loc[df_alcohol.country == 'Cote d\'Ivoire','continent']='Africa'
-    df_alcohol.loc[df_alcohol.country == 'Czech Rep.','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Dominican Rep','continent']='Americas'
-    df_alcohol.loc[df_alcohol.country == 'Guinea-Bissau','continent']='Africa'
-    df_alcohol.loc[df_alcohol.country == 'Macedonia, FYR','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Dominican Rep.','continent']='Africa'
+    df['continent'] = list
+    df.loc[df.country == 'Korea, Rep.','continent']='Asia'
+    df.loc[df.country == 'Swaziland','continent']='Africa'
+    df.loc[df.country == 'Slovak Republic','continent']='Europe'
+    df.loc[df.country == 'Yemen, Rep.','continent']='Asia'
+    df.loc[df.country == 'Bosnia and Herzegovina','continent']='Europe'
+    df.loc[df.country == 'Brunei','continent']='Asia'
+    df.loc[df.country == 'Cape Verde','continent']='Africa'
+    df.loc[df.country == 'Central African Rep.','continent']='Africa'
+    df.loc[df.country == 'Congo, Dem. Rep.','continent']='Africa'
+    df.loc[df.country == 'Congo, Rep.','continent']='Africa'
+    df.loc[df.country == 'Cote d\'Ivoire','continent']='Africa'
+    df.loc[df.country == 'Czech Rep.','continent']='Europe'
+    df.loc[df.country == 'Dominican Rep','continent']='Americas'
+    df.loc[df.country == 'Guinea-Bissau','continent']='Africa'
+    df.loc[df.country == 'Macedonia, FYR','continent']='Europe'
+    df.loc[df.country == 'Dominican Rep.','continent']='Africa'
 
-    df_alcohol.loc[df_alcohol.country == 'Faeroe Islands','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Hong Kong, China','continent']='Asia'
-    df_alcohol.loc[df_alcohol.country == 'Korea, Dem. Rep.','continent']='Asia'
-    df_alcohol.loc[df_alcohol.country == 'Micronesia, Fed. Sts.','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Macao, China','continent']='Asia'
-    df_alcohol.loc[df_alcohol.country == 'Micronesia, Fed. Sts.','continent']='Oceania'
-    df_alcohol.loc[df_alcohol.country == 'Netherlands Antilles','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Reunion','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'Serbia and Montenegro','continent']='Europe'
-    df_alcohol.loc[df_alcohol.country == 'West Bank and Gaza','continent']='Asia'
+    df.loc[df.country == 'Faeroe Islands','continent']='Europe'
+    df.loc[df.country == 'Hong Kong, China','continent']='Asia'
+    df.loc[df.country == 'Korea, Dem. Rep.','continent']='Asia'
+    df.loc[df.country == 'Micronesia, Fed. Sts.','continent']='Europe'
+    df.loc[df.country == 'Macao, China','continent']='Asia'
+    df.loc[df.country == 'Micronesia, Fed. Sts.','continent']='Oceania'
+    df.loc[df.country == 'Netherlands Antilles','continent']='Europe'
+    df.loc[df.country == 'Reunion','continent']='Europe'
+    df.loc[df.country == 'Serbia and Montenegro','continent']='Europe'
+    df.loc[df.country == 'West Bank and Gaza','continent']='Asia'
 
     # Remove NaN
-    #df_alcohol.dropna(axis=0, inplace=True)
+    #df.dropna(axis=0, inplace=True)
 
-    return df_alcohol
+    return df
 
 def make_graph_bar(alcohol_mean, width):
     graphs = []
@@ -129,10 +126,10 @@ def make_graph_bar(alcohol_mean, width):
     plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
     return plot_div
 
-def make_graph_scatter(alcohol_df, width):
+def make_graph_scatter(df, width):
     graphs = []
     graphs.append(
-        go.Scatter(x=alcohol_df.incomeperperson.tolist(), y=alcohol_df.urbanrate.tolist(),
+        go.Scatter(x=df.incomeperperson.tolist(), y=df.urbanrate.tolist(),
             name='Primary Product',
             mode='markers',
             marker_color='indianred',
@@ -141,7 +138,7 @@ def make_graph_scatter(alcohol_df, width):
             '<i>GDP</i>: $%{x:.2f}'+
             '<br><b>Urbanrate</b>: %{y}<br>'+
             '<b>%{text}</b>',
-                    text=alcohol_df['country'])
+                    text=df['country'])
     )
     layout = {
         'height': 420,
@@ -211,8 +208,6 @@ def make_graph_top5(df):
 
 # Create your views here.-----------------------------------------------------
 def index(request):
-    df_alcohol = pd.read_csv(path_alcohol)
-    df_continents = pd.read_csv(path_continents)
 
     new_df = getNewDF(df_alcohol, df_continents)
 
@@ -238,6 +233,8 @@ def step1(request):
     df_mean_continent = new_df.groupby(by='continent').mean()
 
     contents={}
+    
+    contents['df_isna'] = df_alcohol.isna().sum().tolist()
     contents['csv_df'] = df_alcohol.head(5)
     contents['df_continents'] = df_continents.head(5)
     contents['df_mean_continent'] = df_mean_continent

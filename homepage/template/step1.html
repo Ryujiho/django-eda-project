@@ -72,7 +72,7 @@
              <main>
 
                 <div id="steppage" class="container-fluid px-4">
-                    <h1 class="mt-4">1. Data 살펴보기</h1>
+                    <h1 class="mt-4">Step 1. Data 살펴보기</h1>
                     <ol class="breadcrumb mb-4">
                         
                         <li class="breadcrumb-item">Kaggle의 데이터셋을 사용하였습니다.
@@ -116,10 +116,51 @@
             </li>
         </ol>
         <br>
+        <h3>결측치 확인</h3>
+        <table>
+            <tr>
+                <td>country</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>alcconsumption</td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td>incomeperperson</td>
+                <td>23</td>
+            </tr>
+            <tr>
+                <td>suicideper100th</td>
+                <td>22</td>
+            </tr>
+            <tr>
+                <td>employrate</td>
+                <td>35</td>
+            </tr>
+            <tr>
+                <td>urbanrate</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>continent</td>
+                <td>24</td>
+            </tr>
+        </table><br><br>
+
         <h3>전처리 작업</h3> 
         <ol>
+            <li> 결측치 처리(NaN)
+                <ul>
+                    <li>
+                        결측치가 존재해도 해당 행의 다른 컬럼에는 값이 존재하는 경우가 많아 일단 냅둔다.
+                    </li>
+                    <li>
+                        continent column은 Google maps를 참고하여 직접 값을 채워준다.
+                    </li>
+                </ul>
+            </li>
             <li>country 정보를 사용하여 새로운 column 생성: 대륙
-
                 <ul>
                     <li>
                         continents.csv 활용 <a href="https://www.kaggle.com/andradaolteanu/country-mapping-iso-continent-region"><b>데이터셋 링크</b></a>
@@ -129,16 +170,6 @@
                     </li>
                 </ul>
                 
-            </li>
-            <li> 결측치 처리(NaN)
-                    <ul>
-                        <li>
-                            전체 요소에서 50개 존재 -> 다른 열은 값이 존재하는 경우도 있어 일단 냅둡니다.
-                        </li>
-                        <li>
-                            ontinent column은 20행 정도 있어 수작업으로 채워줍니다. (Google maps)
-                        </li>
-                    </ul>
             </li>
         </ol>
         <br>
