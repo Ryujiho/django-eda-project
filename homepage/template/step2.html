@@ -19,8 +19,8 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">EDA Project</a>
             <!-- Side Button-->
-            <a id="iconLeftBtn" class="navbar-brand ps-3" href="/"><i class="fab fa-github"></i></a>
-            <a id="iconRightBtn" class="navbar-brand ps-3" href="/"><i class="fas fa-database"></i></a>
+            <a id="iconLeftBtn" class="navbar-brand ps-3" href="https://github.com/Ryujiho/django-eda-project"><i class="fab fa-github"></i></a>
+            <a id="iconRightBtn" class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption"><i class="fas fa-database"></i></a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -70,36 +70,44 @@
             <div id="layoutSidenav_content">
                 <main>
 
-                    <div class="container-fluid px-4">
+                    <div  id="steppage" class="container-fluid px-4">
                         <h1 class="mt-4">2. 가설 수립하기 </h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Country, Alcohol Consumption, Suicide Rate, Income, Employment & Urban Rate</li>
-                        </ol>
 
-                    <h3>상관관계 분석</h3> 
-                    <p>1에 가까울 수록 관계가 깊고, 0에 가까울 수록 관계가 적다.</p>
-                    <ul>
-                        <li> 1. 음주? 수치
-                            <ul>
-                                <li>소득: 0.30</li>
-                                <li>자살률: 0.35</li>
-                                <li>도시화: 0.27</li>
-                            </ul>
-                        </li>
-                        <li> 2. 소득
-                            <ul><li>도시화: 0.49</li></ul>
-                        </li>
-                        <li> 3. 자살율
-                            <ul><li>고용률: 0.49</li>
-                            거의 관계 없다.
-                            </ul>
-                        </li>
-                        <li> 2. 소득
-                            <ul><li>도시화: 0.49</li></ul>
-                        </li>
-                    </ul>
+                        <br>
+                    <h3>상관관계 분석</h3>
+                    <div>
+                        {% autoescape off %}
+                        {{ plot_corr }}
+                        {% endautoescape %}
+
+                        <ul>
+                            <li>1에 가까울 수록 관계가 깊고, 0에 가까울 수록 관계가 적다.</li>
+                            <li>상관계수가 +0.3과 +0.7 사이에 있으면 뚜렷한 양적 선형관계를 가진다.</li>
+                        </ul>
+                    </div>
+                    <br>
+                    <br>
                     
-                    {{ df_corr|safe }}
+                    <h3>가설 수립</h3>
+                    <ol>
+                        <li> <b>Alcohol Consumption</b>
+                            <ul>
+                                <li>Income per person: 0.30 -> <b>경제적으로 잘 사는 국가일수록, 알코올 소비가 높을 것이다.</b></li>                       
+                                <li>Suicide Rate: 0.35 -> <b>자살률이 높은 국가일수록, 알코올 소비가 높을 것이다.</b></li>
+                            </ul>
+                        </li>
+                        <li> <b>Income per person</b>
+                            <ul><li>Urban Rate: 0.49 -> <b>경제적으로 잘 사는 국가일수록, 도시에 거주하는 사람들이 더 많을 것이다.</b></li>
+                            </ul>
+                        </li>
+                        <li> <b>Employ Rate</b>
+                            <ul><li>상관관계가 전부 0에 가깝다. -> <b>고용률은 국가 경제, 알코올 소비량, 도시화율, 자살률에 영향을 받지 않을 것이다.</b></li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <br>
+                    <br>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">

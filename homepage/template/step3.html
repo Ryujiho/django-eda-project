@@ -19,8 +19,8 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">EDA Project</a>
             <!-- Side Button-->
-            <a id="iconLeftBtn" class="navbar-brand ps-3" href="/"><i class="fab fa-github"></i></a>
-            <a id="iconRightBtn" class="navbar-brand ps-3" href="/"><i class="fas fa-database"></i></a>
+            <a id="iconLeftBtn" class="navbar-brand ps-3" href="https://github.com/Ryujiho/django-eda-project"><i class="fab fa-github"></i></a>
+            <a id="iconRightBtn" class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption"><i class="fas fa-database"></i></a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -69,19 +69,46 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">1. Dataset 살펴보기</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Country, Alcohol Consumption, Suicide Rate, Income, Employment & Urban Rate</li>
-                        </ol>
-                1. 가장 알코올을 많이 소비한 국가(대륙)의 특징 (low income, suicide rate)
-                2. 평균 소득이 비슷한 국가 중 아시아가 알코올 소비가 가장 적음.
-                평균 소득이 비슷한 대륙:America, Asia, Oceania -> 중 아시아가 알코올 소비 가장 적음.
-                1. 낮은 소득인 대륙은 도시화가 더 잘 되어 있다.
-                2. 소득이 높을 수록 -> 알코올 소비, 자살률이 높다.
+                    <div  id="steppage" class="container-fluid px-4">
+                        <h1 class="mt-4">3. 가설 검증하기</h1>
+                        <h3>가설 검증</h3>
+                        <h5>1. 경제적으로 잘 사는 국가일수록, 알코올 소비가 높을 것이다.</h5>
+                        <h5>2. 자살률이 높은 국가일수록, 알코올 소비가 높을 것이다.</h5>
+                        <div>
+                            {% autoescape off %}
+                            {{ plot_bar }}
+                            {% endautoescape %}
+                        </div>
+                        <P>
+                            경제적으로 잘 살거나 자살률 높을수록, 알코올 소비량이 다른 대륙에 대해 높은 것을 확인할 수 있다.
+                        </P>
+                        <br>
 
-                -> 하지만 아메리카는 북미,남미 경제가 많이 달라 다시 나눠야할수도
-                </div></main>
+                        <h5>3. 경제적으로 잘 사는 국가일수록, 도시에 거주하는 사람들이 더 많을 것이다.</h5>
+                        <div>
+                            {% autoescape off %}
+                            {{ plot_scatter }}
+                            {% endautoescape %}
+                        </div>
+                        <P>
+                            경제적으로 잘 사는 국가일수록, 도시 인구 비율이 높은 것을 확인할 수 있다.
+                        </P>
+                        <br>
+
+                        <h5>4. 고용률은 국가 경제, 알코올 소비량, 도시 인구 비율, 자살률에 영향을 받지 않을 것이다.</h5>
+                        
+                        <br>
+                        
+                        <h3>추가 데이터 분석</h3>
+                        <h5>1. 가장 알코올을 많이 소비한 국가(대륙)의 특징 (low income, suicide rate)</h5>
+                        <h5>2. 평균 소득이 비슷한 국가 중 아시아가 알코올 소비가 가장 적음.</h5>
+                        <h5>평균 소득이 비슷한 대륙:America, Asia, Oceania -> 중 아시아가 알코올 소비 가장 적음.</h5>
+                        
+                        -> 하지만 아메리카는 북미,남미 경제가 많이 달라 다시 나눠야할수도
+                        <br>
+
+                        </div>
+                </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">

@@ -19,8 +19,8 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">EDA Project</a>
             <!-- Side Button-->
-            <a id="iconLeftBtn" class="navbar-brand ps-3" href="/"><i class="fab fa-github"></i></a>
-            <a id="iconRightBtn" class="navbar-brand ps-3" href="/"><i class="fas fa-database"></i></a>
+            <a id="iconLeftBtn" class="navbar-brand ps-3" href="https://github.com/Ryujiho/django-eda-project"><i class="fab fa-github"></i></a>
+            <a id="iconRightBtn" class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption"><i class="fas fa-database"></i></a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -70,67 +70,117 @@
             <div id="layoutSidenav_content">
              <main>
 
-                <div class="container-fluid px-4">
+                <div id="steppage" class="container-fluid px-4">
                     <h1 class="mt-4">1. Dataset 살펴보기</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Country, Alcohol Consumption, Suicide Rate, Income, Employment & Urban Rate</li>
-                    </ol>
+                    <br>
         <h3>데이터 개별 속성 파악</h3> 
-        <ul>
+        <ol>
             <li>
                 <b>country</b>: 국가명
             </li>
             <li>
-                <b>incomeperperson</b>: 국가당 GDP
-                Gross Domestic Product per capita in constant 2000 US$. The inflation but not the differences in the cost of living between countries has been taken into account.  
+                <b>incomeperperson</b>: 인당 GDP
+                <ul><li>
+                    Gross Domestic Product per capita in constant 2000 US$. The inflation but not the differences in the cost of living between countries has been taken into account.      
+                </li></ul>
             </li>
             <li>
                 <b>alcconsumption</b>: 알코올 소비율
-                Alcohol consumption per adult (age 15+), litres Recorded and estimated average alcohol consumption, adult (15+) per capita consumption in litres pure alcohol     
+                <ul><li>
+                    Alcohol consumption per adult (age 15+), litres Recorded and estimated average alcohol consumption, adult (15+) per capita consumption in litres pure alcohol         
+                </li></ul>
             </li>
             <li>
                 <b>suicideper100TH</b>: 자살률
-            Suicide, age adjusted, per 100 000 Mortality due to self-inflicted injury, per 100 000 standard population, age adjusted
-         
+                <ul><li>
+                    Suicide, age adjusted, per 100 000 Mortality due to self-inflicted injury, per 100 000 standard population, age adjusted
+                </li></ul>
             </li>
             <li>
                 <b>employrate</b>: 고용률
-            Total employees age 15+ (% of population) Percentage of total population, age above 15, that has been employed during the given year.
-        
+                <ul><li>
+                    Total employees age 15+ (% of population) Percentage of total population, age above 15, that has been employed during the given year.
+                </li></ul>
             </li>
             <li>
-                <b>urbanrate</b>: 시골 거주 인구
-        Urban population (% of total) Urban population refers to people living in urban areas as defined by national statistical offices (calculated using World Bank population estimates and urban ratios from the United Nations World Urbanization Prospects)
-       
+                <b>urbanrate</b>: 도시 거주 비율
+                <ul><li>
+                    Urban population (% of total) Urban population refers to people living in urban areas as defined by national statistical offices (calculated using World Bank population estimates and urban ratios from the United Nations World Urbanization Prospects)
+                </li></ul>
             </li>
-        </ul>
-
+        </ol>
+        <br>
         <h3>전처리 작업</h3> 
-        <ul>
-            <li>1. country 정보를 사용하여 새로운 column 생성: 대륙
-                - continents.csv 활용 <a href="https://www.kaggle.com/andradaolteanu/country-mapping-iso-continent-region">데이터셋 링트</a>
-                - 'Europe', 'Africa', 'Americas', 'Asia', 'Oceania'로 구분
+        <ol>
+            <li>country 정보를 사용하여 새로운 column 생성: 대륙
+
+                <ul>
+                    <li>
+                        continents.csv 활용 <a href="https://www.kaggle.com/andradaolteanu/country-mapping-iso-continent-region">데이터셋 링트</a>
+                    </li>                       
+                    <li>
+                        'Europe', 'Africa', 'Americas', 'Asia', 'Oceania'로 구분
+                    </li>
+                </ul>
+                
             </li>
-            <li>
-                2. 결측치 처리
-                    - 전체 요소에서 결측치(NaN)가 50개 존재 -> 다른 열은 값이 존재하는 경우도 있어 일단 냅둔다.
-                    - continent column은 20행 정도 있어 수작업으로 채워줌 (Google maps)
+            <li> 결측치 처리(NaN)
+                    <ul>
+                        <li>
+                            전체 요소에서 50개 존재 -> 다른 열은 값이 존재하는 경우도 있어 일단 냅둡니다.
+                        </li>
+                        <li>
+                            ontinent column은 20행 정도 있어 수작업으로 채워줍니다. (Google maps)
+                        </li>
+                    </ul>
             </li>
-        </ul>
+        </ol>
+        <br>
+
+        <h4>데이터 타입 </h4> 
+        <table>
+            <tr>
+                <td>country</td>
+                <td>string</td>
+            </tr>
+            <tr>
+                <td>alcconsumption</td>
+                <td>float64</td>
+            </tr>
+            <tr>
+                <td>incomeperperson</td>
+                <td>float64<float64/td>
+            </tr>
+            <tr>
+                <td>suicideper100th</td>
+                <td>float64</td>
+            </tr>
+            <tr>
+                <td>employrate</td>
+                <td>float64</td>
+            </tr>
+            <tr>
+                <td>urbanrate</td>
+                <td>float64</td>
+            </tr>
+            <tr>
+                <td>continent</td>
+                <td>string</td>
+            </tr>
+        </table>
+        <br>
         
-        
-        
-        
-        <h3>데이터 업데이트 날짜 </h3> 
+        <h4>데이터 생성 날짜 </h4> 
         <p> 2021.06</p>
-        <h3>데이터 사이즈 </h3> 
+        <br>
+        <h4>데이터 사이즈 </h4> 
         <p>
         213 rows (국가 기준)
         </p>
 
+        <br>
+        <br>
 
-        전처리 작업에 따른 데이터는 다음과 같다.
-        {{ data }}
         </div></main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

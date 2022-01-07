@@ -121,7 +121,7 @@ def make_graph_bar(alcohol_mean, width):
 
 
     layout = {
-        'title': "<b>대륙별 수치 비교</b> <br><sup>소득이 높은 대륙이 알코올 소비가 가장 높다.</sup>",
+        'title': "<b>대륙별 수치 비교</b> <br><sup>소득이 높을수록 알코올 소비가 가장 높다.</sup>",
         'height': 420,
         'width': width,
     }
@@ -146,7 +146,7 @@ def make_graph_scatter(alcohol_df):
     layout = {
         'height': 420,
         'width': 550,
-        'title': '<b>GDP가 높은 국가일수록 도시화율이 높다.</b>',
+        'title': '<b>GDP가 높은 나라일수록 도시 인구 비율이 높다.</b>',
         'xaxis_title': "Income per person",
         'yaxis_title': "Urban Rate"
     }
@@ -165,13 +165,49 @@ def make_graph_pie(df):
     layout = {
         'height': 420,
         'width': 550,
-        'title': '<b>대륙별 국가 수</b><br><sup>아시아 대륙이 국가 수가 가장 많다.</sup>',
+        'title': '<b>대륙별 나라 수</b><br><sup>아시아 대륙이 나라 수가 가장 많다.</sup>',
         'xaxis_title': "Income per person",
         'yaxis_title': "Urban Rate"
     }
 
     plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
     return plot_div
+
+def make_graph_top5(df):
+    alcohol_max = df.nlargest(5, 'alcconsumption')
+    alcohol_min = df.nsmallest(5, 'alcconsumption')
+
+
+    country_list = alcohol_max.country.tolist()
+    min_list = alcohol_min.country.tolist()
+    alcohol_list = alcohol_max.alcconsumption.tolist()
+    alcohol_min_list = alcohol_min.alcconsumption.tolist()
+
+    country_list.extend(min_list)
+    alcohol_list.extend(alcohol_min_list)
+
+    colors = ['lightsalmon',] * 5 + ['crimson',] * 5
+
+    graphs = []
+    graphs.append(
+        go.Bar(
+                y=country_list, 
+                x=alcohol_list,
+                orientation='h', 
+                texttemplate="%{x}",textposition='outside',
+                marker_color=colors )
+    )
+    layout = {
+        'height': 420,
+        'width': 550,
+        'title': '<b>알코올 소비가 가장 낮은/높은 국가 TOP5</b><br><sup>전 세계에서 한국이 2위를 차지했다.</sup>',
+        'xaxis_title': "Alcohol Consumption",
+        'barmode': 'stack'
+    }
+    plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
+    return plot_div
+
+
 
 # Create your views here.-----------------------------------------------------
 def index(request):
@@ -208,10 +244,9 @@ def step1(request):
 
 def step2(request):
     df_alcohol = pd.read_csv(path_alcohol)
-    df_corr = df_alcohol.corr().apply(lambda x: round(x,2))
 
     contents={}
-    contents['df_corr'] = df_corr.to_html()
+    contents['plot_corr'] = make_graph_corr(df_alcohol)
     return render(request, 'step2.html', contents)
 
 
@@ -222,9 +257,12 @@ def step3(request):
 
 def tables(request):
     df_alcohol = pd.read_csv(path_alcohol)
+    df_continents = pd.read_csv(path_continents)
+
+    new_df = getNewDF(df_alcohol, df_continents)
 
     contents={}
-    contents['csv_df'] = df_alcohol
+    contents['csv_df'] = new_df
     return render(request, 'tables.html', contents)
 
 
@@ -242,4 +280,6 @@ def charts(request):
     contents['plot_bar'] = make_graph_bar(df_mean_continent, 1200)
     contents['plot_scatter'] = make_graph_scatter(df_alcohol)
     contents['plot_pie'] = make_graph_pie(new_df)
+    contents['plot_bar_top'] = make_graph_top5(df_alcohol)
+    
     return render(request, 'charts.html', contents)

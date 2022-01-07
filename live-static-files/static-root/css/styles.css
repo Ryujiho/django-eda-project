@@ -4462,6 +4462,9 @@ textarea.form-control-lg {
   float:right;
   margin-left:0;
 }
+#steppage {
+  margin-left: 1em;
+}
 
 .navbar-light .navbar-brand {
   color: rgba(0, 0, 0, 0.9);
