@@ -19,8 +19,8 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">EDA Project</a>
             <!-- Side Button-->
-            <a class="navbar-brand ps-3" href="https://git.heroku.com/edahome.git" role="button"><i class="fab fa-github"></i></a>
-            <a class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption" role="button"><i class="fas fa-database"></i></a>
+            <a id="iconLeftBtn" class="navbar-brand ps-3" href="/"><i class="fab fa-github"></i></a>
+            <a id="iconRightBtn" class="navbar-brand ps-3" href="/"><i class="fas fa-database"></i></a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -108,22 +108,24 @@
         <h3>전처리 작업</h3> 
         <ul>
             <li>1. country 정보를 사용하여 새로운 column 생성: 대륙
-                - continents.csv 활용
+                - continents.csv 활용 <a href="https://www.kaggle.com/andradaolteanu/country-mapping-iso-continent-region">데이터셋 링트</a>
                 - 'Europe', 'Africa', 'Americas', 'Asia', 'Oceania'로 구분
             </li>
             <li>
                 2. 결측치 처리
-                    - NaN이 속한 열 제거
-                    - continent column은 20행 정도 있어 수작업으로 채워줌
+                    - 전체 요소에서 결측치(NaN)가 50개 존재 -> 다른 열은 값이 존재하는 경우도 있어 일단 냅둔다.
+                    - continent column은 20행 정도 있어 수작업으로 채워줌 (Google maps)
             </li>
         </ul>
         
         
         
         
+        <h3>데이터 업데이트 날짜 </h3> 
+        <p> 2021.06</p>
         <h3>데이터 사이즈 </h3> 
         <p>
-        213 rows (국가 기준) -> 162 rows (전처리 후)
+        213 rows (국가 기준)
         </p>
 
 

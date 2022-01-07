@@ -4452,15 +4452,8 @@ textarea.form-control-lg {
   padding: 0;
   overflow-y: visible;
 }
-#iconLeftBtn {
+#iconbtn {
   width: 50px;
-  margin-right: 0;
-  margin-left:auto;
-}
-#iconRightBtn {
-  width: 50px;
-  float:right;
-  margin-left:0;
 }
 
 .navbar-light .navbar-brand {

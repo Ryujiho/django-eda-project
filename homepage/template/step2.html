@@ -19,8 +19,8 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="/">EDA Project</a>
             <!-- Side Button-->
-            <a class="navbar-brand ps-3" href="https://git.heroku.com/edahome.git" role="button"><i class="fab fa-github"></i></a>
-            <a class="navbar-brand ps-3" href="https://www.kaggle.com/sansuthi/alcohol-consumption" role="button"><i class="fas fa-database"></i></a>
+            <a id="iconLeftBtn" class="navbar-brand ps-3" href="/"><i class="fab fa-github"></i></a>
+            <a id="iconRightBtn" class="navbar-brand ps-3" href="/"><i class="fas fa-database"></i></a>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -77,24 +77,29 @@
                         </ol>
 
                     <h3>상관관계 분석</h3> 
-                    1에 가까울 수록 관계가 깊고, 0에 가까울 수록 관계가 적다.
-                    {{ heatmap }}
-                    자살율, 고용률은 상관관계가 거으 없다..
-                    국가명, 대륙, 알코올 소비, GDP, 자살률, 고용률, 도시화
-                    1. 음주? 수치
-                        - 소득: 0.30
-                        - 자살률: 0.35
-                        - 도시화: 0.27
-                    2. 소득
-                        - 도시화: 0.49
-                    alcconsumption	incomeperperson	suicideper100th	employrate	urbanrate
-                    alcconsumption	1.00	0.30	0.35	-0.13	0.27
-                    incomeperperson	0.30	1.00	0.01	-0.01	0.49
-                    suicideper100th	0.35	0.01	1.00	0.02	-0.13
-                    employrate	-0.13	-0.01	0.02	1.00	-0.33
-                    urbanrate	0.27	0.49	-0.13	-0.33	1.00
-                </div></main>
-                
+                    <p>1에 가까울 수록 관계가 깊고, 0에 가까울 수록 관계가 적다.</p>
+                    <ul>
+                        <li> 1. 음주? 수치
+                            <ul>
+                                <li>소득: 0.30</li>
+                                <li>자살률: 0.35</li>
+                                <li>도시화: 0.27</li>
+                            </ul>
+                        </li>
+                        <li> 2. 소득
+                            <ul><li>도시화: 0.49</li></ul>
+                        </li>
+                        <li> 3. 자살율
+                            <ul><li>고용률: 0.49</li>
+                            거의 관계 없다.
+                            </ul>
+                        </li>
+                        <li> 2. 소득
+                            <ul><li>도시화: 0.49</li></ul>
+                        </li>
+                    </ul>
+                    
+                    {{ df_corr|safe }}
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">

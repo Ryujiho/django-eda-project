@@ -21,10 +21,13 @@ def make_graph_corr(alcohol_df):
     graphs = []
 
     corr_df = alcohol_df.corr().apply(lambda x: round(x,2))
-
+    columns_name = ['Alcohol Consumption','Income per person','Suicide Per 100th','Employ Rate','Urban Rate']
     # Adding bar plot of y3 vs x.
     graphs.append(
-        go.Heatmap(df_to_plotly(corr_df),
+        go.Heatmap(
+                    {'z': corr_df.values.tolist(),
+                    'x': columns_name,
+                    'y': columns_name},
                    hoverongaps = False, 
                     colorscale=[[0.0, '#B1D0E0'], 
                          [0.4, '#6998AB'],
@@ -35,6 +38,7 @@ def make_graph_corr(alcohol_df):
 
     # Setting layout of the figure.
     layout = {
+        'title': '<b>컬럼별 상관계수 비교</b> <br><sup>색이 진할수록 높은 상관계수를 가진다.</sup>',
         'height': 400,
         'width': 450,
     }
@@ -45,7 +49,7 @@ def make_graph_corr(alcohol_df):
 
 def getNewDF(df_alcohol, df_continents):
     list = []
-    for country in enumerate(df_alcohol.country.unique()):
+    for idx, country in enumerate(df_alcohol.country.unique()):
         region = (df_continents[df_continents['name'] == country].region)
         if region.empty:
             list.append('NaN')
@@ -71,14 +75,23 @@ def getNewDF(df_alcohol, df_continents):
     df_alcohol.loc[df_alcohol.country == 'Macedonia, FYR','continent']='Europe'
     df_alcohol.loc[df_alcohol.country == 'Dominican Rep.','continent']='Africa'
 
+    df_alcohol.loc[df_alcohol.country == 'Faeroe Islands','continent']='Europe'
+    df_alcohol.loc[df_alcohol.country == 'Hong Kong, China','continent']='Asia'
+    df_alcohol.loc[df_alcohol.country == 'Korea, Dem. Rep.','continent']='Asia'
+    df_alcohol.loc[df_alcohol.country == 'Micronesia, Fed. Sts.','continent']='Europe'
+    df_alcohol.loc[df_alcohol.country == 'Macao, China','continent']='Asia'
+    df_alcohol.loc[df_alcohol.country == 'Micronesia, Fed. Sts.','continent']='Oceania'
+    df_alcohol.loc[df_alcohol.country == 'Netherlands Antilles','continent']='Europe'
+    df_alcohol.loc[df_alcohol.country == 'Reunion','continent']='Europe'
+    df_alcohol.loc[df_alcohol.country == 'Serbia and Montenegro','continent']='Europe'
+    df_alcohol.loc[df_alcohol.country == 'West Bank and Gaza','continent']='Asia'
+
     # Remove NaN
-    df_alcohol.dropna(axis=0, inplace=True)
+    #df_alcohol.dropna(axis=0, inplace=True)
 
-    # Group by Continent
-    new_df = df_alcohol.groupby(by='continent').mean()
-    return new_df
+    return df_alcohol
 
-def make_graph_bar(alcohol_mean):
+def make_graph_bar(alcohol_mean, width):
     graphs = []
     graphs.append(
         go.Bar(x=alcohol_mean.index.tolist(), y=alcohol_mean.alcconsumption.tolist(),
@@ -108,39 +121,84 @@ def make_graph_bar(alcohol_mean):
 
 
     layout = {
+        'title': "<b>대륙별 수치 비교</b> <br><sup>소득이 높은 대륙이 알코올 소비가 가장 높다.</sup>",
         'height': 420,
-        'width': 560,
+        'width': width,
     }
 
     plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
     return plot_div
 
-def df_to_plotly(df):
-    return {'z': df.values.tolist(),
-            'x': df.columns.tolist(),
-            'y': df.index.tolist()}
+def make_graph_scatter(alcohol_df):
+    graphs = []
+    graphs.append(
+        go.Scatter(x=alcohol_df.incomeperperson.tolist(), y=alcohol_df.urbanrate.tolist(),
+            name='Primary Product',
+            mode='markers',
+            marker_color='indianred',
+                   
+            hovertemplate =
+            '<i>GDP</i>: $%{x:.2f}'+
+            '<br><b>Urbanrate</b>: %{y}<br>'+
+            '<b>%{text}</b>',
+                    text=alcohol_df['country'])
+    )
+    layout = {
+        'height': 420,
+        'width': 550,
+        'title': '<b>GDP가 높은 국가일수록 도시화율이 높다.</b>',
+        'xaxis_title': "Income per person",
+        'yaxis_title': "Urban Rate"
+    }
+
+    plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
+    return plot_div
+
+
+def make_graph_pie(df):
+    graphs = []
+    graphs.append(
+        go.Pie(labels=df.continent.unique(),
+                 values=df.groupby(by='continent').country.count().tolist()
+                )
+    )
+    layout = {
+        'height': 420,
+        'width': 550,
+        'title': '<b>대륙별 국가 수</b><br><sup>아시아 대륙이 국가 수가 가장 많다.</sup>',
+        'xaxis_title': "Income per person",
+        'yaxis_title': "Urban Rate"
+    }
+
+    plot_div = plot({'data': graphs, 'layout': layout}, output_type='div')
+    return plot_div
 
 # Create your views here.-----------------------------------------------------
 def index(request):
     df_alcohol = pd.read_csv(path_alcohol)
     df_continents = pd.read_csv(path_continents)
 
-    df_mean_continent = getNewDF(df_alcohol, df_continents)
+    new_df = getNewDF(df_alcohol, df_continents)
+
+    # Group by Continent
+    df_mean_continent = new_df.groupby(by='continent').mean()
 
     # Send to HTML Template
     contents={}
     contents['csv_df'] = df_alcohol
     contents['plot_corr'] = make_graph_corr(df_alcohol)
-    contents['plot_bar'] = make_graph_bar(df_mean_continent)
+    contents['plot_bar'] = make_graph_bar(df_mean_continent, 560)
 
     return render(request, 'index.html', contents)
 
 def step1(request):
-    contents={}
     df_alcohol = pd.read_csv(path_alcohol)
     df_continents = pd.read_csv(path_continents)
 
-    df_mean_continent = getNewDF(df_alcohol, df_continents)
+    new_df = getNewDF(df_alcohol, df_continents)
+
+    # Group by Continent
+    df_mean_continent = new_df.groupby(by='continent').mean()
 
     contents={}
     contents['csv_df'] = df_alcohol.head(5)
@@ -149,7 +207,11 @@ def step1(request):
     return render(request, 'step1.html', contents)
 
 def step2(request):
+    df_alcohol = pd.read_csv(path_alcohol)
+    df_corr = df_alcohol.corr().apply(lambda x: round(x,2))
+
     contents={}
+    contents['df_corr'] = df_corr.to_html()
     return render(request, 'step2.html', contents)
 
 
@@ -167,14 +229,17 @@ def tables(request):
 
 
 def charts(request):
-    contents={}
-
     df_alcohol = pd.read_csv(path_alcohol)
     df_continents = pd.read_csv(path_continents)
 
-    df_mean_continent = getNewDF(df_alcohol, df_continents)
+    new_df = getNewDF(df_alcohol, df_continents)
+
+    # Group by Continent
+    df_mean_continent = new_df.groupby(by='continent').mean()
 
     contents={}
     contents['plot_corr'] = make_graph_corr(df_alcohol)
-    contents['plot_bar'] = make_graph_bar(df_mean_continent)
+    contents['plot_bar'] = make_graph_bar(df_mean_continent, 1200)
+    contents['plot_scatter'] = make_graph_scatter(df_alcohol)
+    contents['plot_pie'] = make_graph_pie(new_df)
     return render(request, 'charts.html', contents)
