@@ -27,6 +27,7 @@
 - [ ] django html template inheritance
 - [ ] Normalize column values (Bar graph)
 - [ ] Remove Secret key
+- [ ] Add new graph (https://plotly.com/python/choropleth-maps/)
 
 ## References
 - 부트스트랩 (https://startbootstrap.com/previews/sb-admin](https://startbootstrap.com/previews/sb-admin) 
